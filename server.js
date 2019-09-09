@@ -18,12 +18,6 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-
-// your first API endpoint... 
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
-});
-
 app.route("/api/timestamp/:date_string?").get((req, res, next) => {
   if (isNaN(req.params.date_string) == false) {
     var newDate = new Date(parseInt(req.params.date_string)*1000);
@@ -31,7 +25,10 @@ app.route("/api/timestamp/:date_string?").get((req, res, next) => {
     var newDate = new Date(req.params.date_string);
   }
   if (isNaN(newDate.getTime()) == true) {
-    res.json({"error": "Invalid Date"});
+    res.json({
+      "unix": null,
+      "utc": "Invalid Date"
+    });
   } else {
     res.json({
       "unix": newDate.getTime(),
