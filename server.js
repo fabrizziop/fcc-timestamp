@@ -19,7 +19,9 @@ app.get("/", function (req, res) {
 });
 
 app.route("/api/timestamp/:date_string?").get((req, res, next) => {
-  if (isNaN(req.params.date_string) == false) {
+  if (req.params.date_string == undefined) {
+    var newDate = new Date();
+  } else if (isNaN(req.params.date_string) == false) {
     var newDate = new Date(parseInt(req.params.date_string)*1000);
   } else {
     var newDate = new Date(req.params.date_string);
